@@ -1,0 +1,82 @@
+/* layout.css: kerangka aplikasi, bilah atas, menu bawah */
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  background: var(--bg);
+}
+
+@media (min-width: 520px) {
+  body { background: var(--frame); }
+  .app { border-inline: 1px solid var(--outline); }
+}
+
+.appbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: max(8px, env(safe-area-inset-top)) 20px 4px;
+  background: var(--bg);
+}
+.appbar h1 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
+
+.screens {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 4px 16px 12px;
+}
+
+.screen { height: 100%; display: flex; flex-direction: column; gap: 10px; }
+
+/* Beranda pas satu layar, Pengaturan tetap bisa digulir */
+#screen-home { justify-content: space-between; }
+#screen-settings {
+  overflow-y: auto;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+#screen-settings > * { flex-shrink: 0; }
+
+.bottomnav {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  margin: 0 16px calc(10px + env(safe-area-inset-bottom));
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--outline);
+  border-radius: 28px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 22px;
+  background: none;
+  color: var(--on-surface-2);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-pill { display: grid; place-items: center; }
+
+.nav-item[aria-current="page"] {
+  background: var(--primary);
+  color: var(--on-primary);
+}

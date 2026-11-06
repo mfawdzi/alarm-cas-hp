@@ -1,0 +1,28 @@
+/* diagram.css: diagram gerbang logika */
+.diagram-card { padding: 16px 12px; }
+#circuit { width: 100%; height: auto; display: block; }
+
+.wire { fill: none; stroke: var(--wire-off); stroke-width: 3; stroke-linejoin: round; transition: stroke 0.15s ease; }
+.wire.analog { stroke-dasharray: 4 4; }
+.wire.on { stroke: var(--charging); }
+
+.node rect { fill: var(--surface-2); stroke: var(--on-surface-2); stroke-width: 1.5; }
+.t-label { fill: var(--on-surface-2); font-size: 12px; text-anchor: middle; }
+.t-value { fill: var(--on-surface); font-size: 17px; font-weight: 500; text-anchor: middle; }
+
+.gate rect { fill: var(--gate-bg); stroke: var(--gate-bg); stroke-width: 2; }
+.gate .g-title { fill: var(--gate-fg); font-size: 16px; font-weight: 500; text-anchor: middle; }
+.gate .g-title.small { font-size: 13px; }
+.gate .g-desc { fill: var(--gate-desc); font-size: 11px; text-anchor: middle; }
+.gate.out-on rect { stroke: var(--charging); stroke-width: 3; }
+
+.alarm-node rect { fill: var(--surface-2); stroke: var(--on-surface-2); stroke-width: 1.5; }
+.t-alarm { fill: var(--on-surface); font-size: 24px; font-weight: 500; text-anchor: middle; }
+.alarm-node.on rect { fill: var(--danger); stroke: var(--danger); }
+.alarm-node.on .t-label,
+.alarm-node.on .t-alarm { fill: var(--on-danger); }
+
+.bubble circle { fill: var(--surface); stroke: var(--wire-off); stroke-width: 2; }
+.bubble text { fill: var(--on-surface); font-size: 12px; font-weight: 500; text-anchor: middle; }
+.bubble.on circle { fill: var(--charging); stroke: var(--charging); }
+.bubble.on text { fill: #101C16; }

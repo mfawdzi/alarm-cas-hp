@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F1F5F2">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Alarm Cas HP</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- Kumpulan ikon -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
+    <symbol id="i-logic" viewBox="0 0 24 24"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></symbol>
+  </svg>
+
+  <div class="app">
+    <header class="appbar">
+      <h1 id="appbar-title">Alarm Cas</h1>
+    </header>
+
+    <main id="screens" class="screens">
+
+      <!-- ============ BERANDA ============ -->
+      <section id="screen-home" class="screen" aria-label="Beranda">
+        <div class="card gauge-card">
+          <div id="gauge" class="gauge">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <circle class="g-track" cx="100" cy="100" r="84"/>
+              <circle id="g-progress" class="g-progress" cx="100" cy="100" r="84" transform="rotate(-90 100 100)"/>
+            </svg>
+            <div class="g-center">
+              <span id="g-level" class="g-level">0%</span>
+              <span id="g-chip" class="chip">
+                <svg class="icon sm"><use href="#i-bolt"/></svg>
+                <span id="g-chip-text">Tidak dicas</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div id="banner" class="card banner" role="status" aria-live="polite">
+          <p id="banner-title" class="banner-title">Alarm diam</p>
+          <p id="banner-detail" class="banner-detail"></p>
+        </div>
+
+        <div class="card">
+          <div class="row">
+            <div class="row-text">
+              <span class="row-title">Alarm otomatis</span>
+              <span id="sys-sub" class="row-sub">Nyalakan agar suara alarm diizinkan</span>
+            </div>
+            <label class="switch">
+              <input id="sw-system" type="checkbox" role="switch" aria-label="Alarm otomatis">
+              <span class="track"></span>
+            </label>
+          </div>
+        </div>
+
+        <button id="btn-manual" class="btn tonal" type="button" aria-pressed="false">
+          <svg class="icon"><use href="#i-bell"/></svg>
+          <span id="btn-manual-text">Tekan alarm manual</span>
+        </button>
+        <p class="note">Alarm manual hanya berbunyi jika kabel cas terpasang.</p>
+
+        <div class="tiles">
+          <div class="tile"><span id="tile-threshold" class="tile-value">100%</span><span class="tile-label">Batas penuh</span></div>
+          <div class="tile"><span id="tile-tone" class="tile-value">Klasik</span><span class="tile-label">Nada</span></div>
+          <div class="tile"><span id="tile-source" class="tile-value">Baterai HP</span><span class="tile-label">Sumber data</span></div>
+        </div>
+      </section>
+
+      <!-- ============ PENGATURAN ============ -->
+      <section id="screen-settings" class="screen" aria-label="Pengaturan" hidden>
+
+        <h2 class="group-title">Alarm</h2>
+        <div class="card">
+          <div class="row stack">
+            <div class="row-line">
+              <span class="row-title">Batas baterai penuh</span>
+              <span id="set-threshold-text" class="row-value">100%</span>
+            </div>
+            <input id="set-threshold" class="slider" type="range" min="10" max="100" step="1" value="100" aria-label="Batas baterai penuh">
+            <span class="row-sub">Alarm siap bunyi saat baterai mencapai angka ini. Turunkan untuk uji coba.</span>
+          </div>
+          <div class="divider"></div>
+          <div class="row stack">
+            <div class="row-line">
+              <span class="row-title">Volume alarm</span>
+              <span id="set-volume-text" class="row-value">80%</span>
+            </div>
+            <input id="set-volume" class="slider" type="range" min="10" max="100" step="5" value="80" aria-label="Volume alarm">
+          </div>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="row-text">
+              <span class="row-title">Getar</span>
+              <span class="row-sub">Ikut bergetar saat alarm berbunyi</span>
+            </div>
+            <label class="switch">
+              <input id="set-vibrate" type="checkbox" role="switch" aria-label="Getar">
+              <span class="track"></span>
+            </label>
+          </div>
+        </div>
+
+        <h2 class="group-title">Nada alarm</h2>
+        <div class="card" id="tone-list">
+          <label class="row radio">
+            <div class="row-text"><span class="row-title">Klasik</span><span class="row-sub">Dua nada bergantian</span></div>
+            <input type="radio" name="tone" value="klasik">
+          </label>
+          <div class="divider"></div>
+          <label class="row radio">
+            <div class="row-text"><span class="row-title">Sirine</span><span class="row-sub">Naik turun seperti sirine</span></div>
+            <input type="radio" name="tone" value="sirine">
+          </label>
+          <div class="divider"></div>
+          <label class="row radio">
+            <div class="row-text"><span class="row-title">Lonceng</span><span class="row-sub">Dentang lembut</span></div>
+            <input type="radio" name="tone" value="lonceng">
+          </label>
+          <div class="divider"></div>
+          <label class="row radio">
+            <div class="row-text"><span class="row-title">Bip cepat</span><span class="row-sub">Dua bip pendek</span></div>
+            <input type="radio" name="tone" value="bip">
+          </label>
+        </div>
+
+        <h2 class="group-title">Tampilan</h2>
+        <div class="card">
+          <div class="row">
+            <div class="row-text">
+              <span class="row-title">Jaga layar tetap menyala</span>
+              <span class="row-sub">Saat alarm otomatis aktif, supaya alarm tidak terlewat</span>
+            </div>
+            <label class="switch">
+              <input id="set-keepawake" type="checkbox" role="switch" aria-label="Jaga layar tetap menyala">
+              <span class="track"></span>
+            </label>
+          </div>
+          <div class="divider"></div>
+          <div class="row stack">
+            <span class="row-title">Tema</span>
+            <div class="segmented" role="radiogroup" aria-label="Tema">
+              <label><input type="radio" name="theme" value="sistem"><span>Ikuti sistem</span></label>
+              <label><input type="radio" name="theme" value="terang"><span>Terang</span></label>
+              <label><input type="radio" name="theme" value="gelap"><span>Gelap</span></label>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="group-title">Uji coba</h2>
+        <div class="card">
+          <button id="btn-test" class="row action" type="button">
+            <div class="row-text">
+              <span class="row-title">Tes suara</span>
+              <span class="row-sub">Bunyikan nada terpilih satu kali</span>
+            </div>
+          </button>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="row-text">
+              <span class="row-title">Mode simulasi</span>
+              <span id="sensor-note" class="row-sub">Membaca baterai HP ini secara langsung.</span>
+            </div>
+            <label class="switch">
+              <input id="set-simulate" type="checkbox" role="switch" aria-label="Mode simulasi">
+              <span class="track"></span>
+            </label>
+          </div>
+          <div id="sim-panel" hidden>
+            <div class="divider"></div>
+            <div class="row stack">
+              <div class="row-line">
+                <span class="row-title">Level baterai simulasi</span>
+                <span id="sim-level-text" class="row-value">60%</span>
+              </div>
+              <input id="sim-level" class="slider" type="range" min="0" max="100" step="1" value="60" aria-label="Level baterai simulasi">
+            </div>
+            <div class="divider"></div>
+            <div class="row">
+              <div class="row-text"><span class="row-title">Kabel cas terpasang</span></div>
+              <label class="switch">
+                <input id="sim-charging" type="checkbox" role="switch" aria-label="Kabel cas terpasang">
+                <span class="track"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="group-title">Tentang</h2>
+        <div class="card">
+          <button id="btn-install" class="row action" type="button" hidden>
+            <div class="row-text">
+              <span class="row-title">Pasang di layar utama</span>
+              <span class="row-sub">Buka seperti aplikasi biasa, tanpa bilah browser</span>
+            </div>
+          </button>
+          <div id="install-divider" class="divider" hidden></div>
+          <div class="row">
+            <div class="row-text">
+              <span class="row-title">Alarm Cas HP Otomatis</span>
+              <span class="row-sub">Versi 1.0.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottomnav" aria-label="Menu utama">
+      <button class="nav-item" type="button" data-screen="home" aria-current="page">
+        <span class="nav-pill"><svg class="icon"><use href="#i-home"/></svg></span>
+        <span>Beranda</span>
+      </button>
+      <button class="nav-item" type="button" data-screen="settings">
+        <span class="nav-pill"><svg class="icon"><use href="#i-settings"/></svg></span>
+        <span>Pengaturan</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Layar alarm penuh -->
+  <div id="overlay" class="overlay" role="alertdialog" aria-labelledby="ov-title" aria-describedby="ov-text" hidden>
+    <svg class="ov-icon"><use href="#i-bell"/></svg>
+    <h2 id="ov-title" class="ov-title">Baterai penuh</h2>
+    <p id="ov-text" class="ov-text">Cabut kabel cas untuk mematikan alarm.</p>
+    <button id="btn-ov-off" class="btn ov-btn" type="button">Nonaktifkan alarm</button>
+  </div>
+
+  <script src="js/gates.js" defer></script>
+  <script src="js/battery.js" defer></script>
+  <script src="js/alarm-sound.js" defer></script>
+  <script src="js/wakelock.js" defer></script>
+  <script src="js/settings.js" defer></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/ui-home.js" defer></script>
+  <script src="js/ui-settings.js" defer></script>
+  <script src="js/ui-overlay.js" defer></script>
+  <script src="js/navigation.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
